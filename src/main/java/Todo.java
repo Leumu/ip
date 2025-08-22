@@ -9,12 +9,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String getType() {
-        return "T";
-    }
-
-    @Override
-    public String getExtraDetails() {
-        return "";
+    public String toString() {
+        return String.format("[T]%s", super.toString());
     }
 }

@@ -11,12 +11,7 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String getType() {
-        return "D";
-    }
-
-    @Override
-    public String getExtraDetails() {
-        return "(by: " + dueDate + ")";
+    public String toString() {
+        return String.format("[D]%s (by: %s)", super.toString(), dueDate);
     }
 }

@@ -13,12 +13,7 @@ public class Event extends Task {
     }
 
     @Override
-    public String getType() {
-        return "E";
-    }
-
-    @Override
-    public String getExtraDetails() {
-        return "(from: " + starting + " to: " + end + ")";
+    public String toString() {
+        return String.format("[E]%s (from: %s to: %s)", super.toString(), starting, end);
     }
 }

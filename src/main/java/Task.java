@@ -1,7 +1,7 @@
 /**
  * Task object to keep track of task name and status
  */
-public abstract class Task {
+public class Task {
     private String taskName;
     private Boolean isCompleted;
 
@@ -26,7 +26,8 @@ public abstract class Task {
         return taskName;
     }
 
-    public abstract String getType();
-
-    public abstract String getExtraDetails();
+    @Override
+    public String toString() {
+        return String.format("[%s] %s", getStatus(), getTaskName());
+    }
 }
