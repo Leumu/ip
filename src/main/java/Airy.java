@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Airy {
     public static void main(String[] args) {
@@ -9,9 +10,7 @@ public class Airy {
         // Detect input
         Scanner sc = new Scanner(System.in);
         // To store Task objects
-        Task[] tasks = new Task[100];
-        // To take note of increment for the tasks array
-        int increment = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         System.out.println("Hello! I'm " + name);
         System.out.println("What can I do for you?\n");
@@ -31,24 +30,30 @@ public class Airy {
                 } else if (lower.equals("list")) {
                     System.out.println("Here are the tasks in your list:");
                     // Print out saved tasks
-                    for (int i = 0; i < increment; i++) {
-                        Task taskObj = tasks[i];
+                    for (int i = 0; i < tasks.size(); i++) {
+                        Task taskObj = tasks.get(i);
                         System.out.printf("%d. %s\n",
                                 i + 1,
                                 taskObj.toString());
                     }
                     System.out.print("\n");
-                } else if (lower.startsWith("mark ")) {
+                } else if (lower.startsWith("mark")) {
+                    if (repeat.length() <= 5) {
+                        throw new AiryException("Please enter a number after mark to mark a task");
+                    }
                     // Gets the number after mark, -1 cause array is 0 indexed
                     int taskNum = Integer.parseInt(lower.substring(5)) - 1;
-                    Task taskObj = tasks[taskNum];
+                    Task taskObj = tasks.get(taskNum);
                     taskObj.markCompleted();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.printf(taskObj + "\n\n");
-                } else if (lower.startsWith("unmark ")) {
+                } else if (lower.startsWith("unmark")) {
+                    if (repeat.length() <= 7) {
+                        throw new AiryException("Please enter a number after unmark to unmark a task");
+                    }
                     // Gets the number after unmark, -1 cause array is 0 indexed
                     int taskNum = Integer.parseInt(lower.substring(7)) - 1;
-                    Task taskObj = tasks[taskNum];
+                    Task taskObj = tasks.get(taskNum);
                     taskObj.markUncompleted();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.printf(taskObj + "\n\n");
@@ -60,12 +65,11 @@ public class Airy {
                     // New to do object
                     Todo todoTask = new Todo(taskName);
                     // Save to do object into array
-                    tasks[increment] = todoTask;
-                    increment++;
+                    tasks.add(todoTask);
                     // Show user task has been added
                     System.out.println("Got it. I've added this task:");
                     System.out.printf("  " + todoTask + "\n");
-                    System.out.printf("Now you have %d tasks in the list.\n\n", increment);
+                    System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
                 } else if (lower.startsWith("deadline")) {
                     if (repeat.length() <= 9) {
                         throw new AiryException("Please enter a task after deadline");
@@ -80,12 +84,11 @@ public class Airy {
                     // New deadline object
                     Deadline deadlineTask = new Deadline(taskName, dueDate);
                     // Save Deadline object into array
-                    tasks[increment] = deadlineTask;
-                    increment++;
+                    tasks.add(deadlineTask);
                     // Show user task has been added
                     System.out.println("Got it. I've added this task:");
                     System.out.printf("  " + deadlineTask + "\n");
-                    System.out.printf("Now you have %d tasks in the list.\n\n", increment);
+                    System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
                 } else if (lower.startsWith("event")) {
                     if (repeat.length() <= 6) {
                         throw new AiryException("Please enter a task after event");
@@ -102,12 +105,22 @@ public class Airy {
                     // New event object
                     Event eventTask = new Event(taskName, starting, end);
                     // Save Event object into array
-                    tasks[increment] = eventTask;
-                    increment++;
+                    tasks.add(eventTask);
                     // Show user task has been added
                     System.out.println("Got it. I've added this task:");
                     System.out.printf("  " + eventTask + "\n");
-                    System.out.printf("Now you have %d tasks in the list.\n\n", increment);
+                    System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
+                } else if (lower.startsWith("delete")) {
+                    if (repeat.length() <= 7) {
+                        throw new AiryException("Please enter a number after delete to delete a task");
+                    }
+                    int taskNum = Integer.parseInt(lower.substring(7)) - 1;
+                    Task removedTask = tasks.get(taskNum);
+                    // ArrayList auto reduces the index of elements after deleted element by 1
+                    tasks.remove(removedTask);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.printf("  " + removedTask + "\n");
+                    System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
                 } else {
                     // Unrecognized command
                     throw new AiryException("Unrecognized command");
