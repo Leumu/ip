@@ -20,7 +20,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String getExtraDetails() {
+    public String getExtraDetailsForStorage() {
         return ""; // nothing extra
     }
 }
