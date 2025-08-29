@@ -7,7 +7,9 @@ package airy;
 public class Todo extends Task {
 
     /**
-     * This is my to do constructor
+     * Constructs a new To do task with the specified description.
+     *
+     * @param taskName the name of the to do task
      */
     public Todo(String taskName) {
         super(taskName);
@@ -15,12 +17,20 @@ public class Todo extends Task {
 
     /**
      * Provides info of the to do task in string format
+     *
+     * @return a formatted string representation of the to do task
      */
     @Override
     public String toString() {
         return String.format("[T]%s", super.toString());
     }
 
+    /**
+     * Since To do tasks do not have any additional details beyond the basic
+     * task information, this method returns an empty string.
+     *
+     * @return an empty string, as To do tasks have no extra storage details
+     */
     @Override
     public String getExtraDetailsForStorage() {
         return ""; // nothing extra
