@@ -26,7 +26,8 @@ public class Storage {
         }
     }
 
-    /** Loads tasks from ./data/Airy.txt.
+    /**
+     * Loads tasks from ./data/Airy.txt.
      * Create file if it doesn't exist it and returns empty list.
      */
     public static ArrayList<Task> load() {
@@ -89,13 +90,13 @@ public class Storage {
      */
     private static Task createTask(String line) {
         // Split into at most 4 pieces
-        String[] parts = line.split("\\s*\\|\\s*", 4);
+        String[] parts = line.split("\\s*\\|\\s*", 5);
         if (parts.length < 3) {
             return null;
         }
 
         String type = parts[0].trim();
-        boolean isCompleted = parts[1].trim().equals("X");
+        boolean isCompleted = parts[1].trim().equals("1");
         String name = parts[2].trim();
 
         // Switch statement to create respective tasks based on their data
