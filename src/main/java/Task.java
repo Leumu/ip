@@ -50,7 +50,7 @@ public abstract class Task {
     }
 
     /**
-     * Gets extra details, esp for Tasks like Deadline and Event
+     * Gets extra details, esp for Tasks like Deadline and Event for Storage class
      */
-    public abstract String getExtraDetails();
+    public abstract String getExtraDetailsForStorage();
 }

@@ -22,7 +22,7 @@ public class Storage {
                 Files.createFile(DATA_FILE);
             }
         } catch (IOException e) {
-            System.out.println("Error creating data file"); // Prints out that there's an error
+            throw new AiryException("Error creating data file"); // Throws an error
         }
     }
 
@@ -34,55 +34,19 @@ public class Storage {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
             fileExists();
-            List<String> lines = Files.readAllLines(DATA_FILE);
-            for (String line : lines) {
-                Task t = createTask(line); // Creates the task
-                if (t != null) {
-                    tasks.add(t); // Stores the task in the ArrayList
+            if (Files.size(DATA_FILE) > 0) { // So no error is throw if file is empty
+                List<String> lines = Files.readAllLines(DATA_FILE); // If file is empty, it throws an error
+                for (String line : lines) {
+                    Task t = createTask(line); // Creates the task
+                    if (t != null) {
+                        tasks.add(t); // Stores the task in the ArrayList
+                    }
                 }
             }
         } catch (Exception e) {
-            System.out.println("Something went wrong, starting with what we could read.");
+            throw new AiryException("Something went wrong, starting with what we could read.");
         }
         return tasks;
-    }
-
-    /**
-     * Saves the current tasks list to ./data/Airy.txt
-     * Note it overwrites the file
-     */
-    public static void save(ArrayList<Task> tasks) {
-        List<String> data = new ArrayList<>();
-        for (Task task : tasks) {
-            data.add(serialize(task)); // Change formatting for every Task inside ArrayList tasks to a String
-        }
-        try {
-            fileExists();
-            // Truncate file before writing
-            Files.write(DATA_FILE, data,
-                    StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
-        } catch (IOException e) {
-            System.out.println("Could not save tasks to storage.");
-        }
-    }
-
-    /**
-     * Saves the existing tasks into my file data/Airy.txt
-     * File format:
-     * T | 1 | read book
-     * D | 0 | return book | Sunday
-     * E | 0 | project meeting | Mon 2pm | 4pm
-     */
-    private static String serialize(Task t) {
-        String isCompleted = t.getStatus().equals("X") ? "1" : "0";
-
-        if (t instanceof Todo) {
-            return String.format("T | %s | %s", isCompleted, t.getTaskName());
-        } else if (t instanceof Deadline) {
-            return String.format("D | %s | %s | %s", isCompleted, t.getTaskName(), t.getExtraDetails());
-        } else {
-            return String.format("E | %s | %s | %s", isCompleted, t.getTaskName(), t.getExtraDetails());
-        }
     }
 
     /**
@@ -128,6 +92,44 @@ public class Storage {
             }
         default:
             return null;
+        }
+    }
+
+    /**
+     * Saves the current tasks list to ./data/Airy.txt
+     * Note it overwrites the file
+     */
+    public static void save(ArrayList<Task> tasks) {
+        List<String> data = new ArrayList<>();
+        for (Task task : tasks) {
+            data.add(serialize(task)); // Change formatting for every Task inside ArrayList tasks to a String
+        }
+        try {
+            fileExists();
+            // Truncate file before writing
+            Files.write(DATA_FILE, data,
+                    StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
+        } catch (IOException e) {
+            System.out.println("Could not save tasks to storage.");
+        }
+    }
+
+    /**
+     * Saves the existing tasks into my file data/Airy.txt
+     * File format:
+     * T | 1 | read book
+     * D | 0 | return book | Sunday
+     * E | 0 | project meeting | Mon 2pm | 4pm
+     */
+    private static String serialize(Task t) {
+        String isCompleted = t.getStatus().equals("X") ? "1" : "0";
+
+        if (t instanceof Todo) {
+            return String.format("T | %s | %s", isCompleted, t.getTaskName());
+        } else if (t instanceof Deadline) {
+            return String.format("D | %s | %s | %s", isCompleted, t.getTaskName(), t.getExtraDetailsForStorage());
+        } else {
+            return String.format("E | %s | %s | %s", isCompleted, t.getTaskName(), t.getExtraDetailsForStorage());
         }
     }
 }
