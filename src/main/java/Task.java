@@ -2,7 +2,7 @@
  * Task object to keep track of task name and status
  */
 public abstract class Task {
-    private String taskName;
+    private final String taskName;
     private Boolean isCompleted;
 
     /**
