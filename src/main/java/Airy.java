@@ -17,8 +17,9 @@ public class Airy {
 
         // Detect input
         Scanner sc = new Scanner(System.in);
-        // To store Task objects
-        ArrayList<Task> tasks = new ArrayList<>();
+        // Load tasks from disk instead of starting empty
+        // If no data, create fie and return empty ArrayList
+        ArrayList<Task> tasks = Storage.load();
 
         System.out.println("Hello! I'm " + name);
         System.out.println("What can I do for you?\n");
@@ -55,6 +56,9 @@ public class Airy {
                     taskObj.markCompleted();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.printf(taskObj + "\n\n");
+
+                    // Save after change
+                    Storage.save(tasks);
                 } else if (lower.startsWith("unmark")) {
                     if (repeat.length() <= 7) {
                         throw new AiryException("Please enter a number after unmark to unmark a task");
@@ -65,6 +69,9 @@ public class Airy {
                     taskObj.markUncompleted();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.printf(taskObj + "\n\n");
+
+                    // Save after change
+                    Storage.save(tasks);
                 } else if (lower.startsWith("todo")) {
                     if (repeat.length() <= 5) {
                         throw new AiryException("Please enter a task after todo");
@@ -78,6 +85,9 @@ public class Airy {
                     System.out.println("Got it. I've added this task:");
                     System.out.printf("  " + todoTask + "\n");
                     System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
+
+                    // Save after change
+                    Storage.save(tasks);
                 } else if (lower.startsWith("deadline")) {
                     if (repeat.length() <= 9) {
                         throw new AiryException("Please enter a task after deadline");
@@ -97,6 +107,9 @@ public class Airy {
                     System.out.println("Got it. I've added this task:");
                     System.out.printf("  " + deadlineTask + "\n");
                     System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
+
+                    // Save after change
+                    Storage.save(tasks);
                 } else if (lower.startsWith("event")) {
                     if (repeat.length() <= 6) {
                         throw new AiryException("Please enter a task after event");
@@ -119,6 +132,9 @@ public class Airy {
                     System.out.println("Got it. I've added this task:");
                     System.out.printf("  " + eventTask + "\n");
                     System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
+
+                    // Save after change
+                    Storage.save(tasks);
                 } else if (lower.startsWith("delete")) {
                     if (repeat.length() <= 7) {
                         throw new AiryException("Please enter a number after delete to delete a task");
@@ -130,6 +146,9 @@ public class Airy {
                     System.out.println("Noted. I've removed this task:");
                     System.out.printf("  " + removedTask + "\n");
                     System.out.printf("Now you have %d tasks in the list.\n\n", tasks.size());
+
+                    // Save after change
+                    Storage.save(tasks);
                 } else {
                     // Unrecognized command
                     throw new AiryException("Unrecognized command");
