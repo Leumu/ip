@@ -1,3 +1,5 @@
+package airy;
+
 /**
  * This class is a subclass from task
  * Works like a normal task without deadlines

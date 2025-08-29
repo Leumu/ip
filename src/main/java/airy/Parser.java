@@ -1,3 +1,5 @@
+package airy;
+
 /**
  * This class parses the input of the user
  */
@@ -46,6 +48,9 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the Deadline and Event tasks to split them into individual args
+     */
     public String[] parseDeadlineEvent(String command, String args) {
         if (command.equals("deadline")) {
             String[] parts = args.split("/by");

@@ -1,3 +1,5 @@
+package airy;
+
 import java.util.Scanner;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Scanner;
 public class Airy {
     private final Ui ui;
     private final TaskList tasks;
-    private Parser parser;
+    private final Parser parser;
 
     /**
      * This is my Airy constructor which initializes the ArrayList for Task and Ui

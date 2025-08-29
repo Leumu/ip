@@ -1,3 +1,5 @@
+package airy;
+
 /**
  * This is an exception for my chatbot
  * It is an unchecked exception and allows the code to throw it
