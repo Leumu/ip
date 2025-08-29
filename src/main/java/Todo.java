@@ -4,12 +4,23 @@
  */
 public class Todo extends Task {
 
+    /**
+     * This is my to do constructor
+     */
     public Todo(String taskName) {
         super(taskName);
     }
 
+    /**
+     * Provides info of the to do task in string format
+     */
     @Override
     public String toString() {
         return String.format("[T]%s", super.toString());
+    }
+
+    @Override
+    public String getExtraDetails() {
+        return ""; // nothing extra
     }
 }

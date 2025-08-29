@@ -1,7 +1,15 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * This is my main class which implements the logic for handling
+ * the different tasks and commands
+ */
 public class Airy {
+    /**
+     * This is my main method which handles the logic for handling
+     * the different tasks and commands
+     */
     public static void main(String[] args) {
         String name = "Airy";
         String repeat;
@@ -93,6 +101,7 @@ public class Airy {
                     if (repeat.length() <= 6) {
                         throw new AiryException("Please enter a task after event");
                     }
+                    // Split string whenever u see /from or /to
                     String[] parts = repeat.substring(6).split("/from|/to");
                     if (parts.length != 3) {
                         throw new AiryException(
