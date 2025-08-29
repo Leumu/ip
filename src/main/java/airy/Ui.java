@@ -85,4 +85,23 @@ public class Ui {
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task + "\n");
     }
+
+    /**
+     * Displays the list of tasks that match the search criteria.
+     * Displays a message if no matching tasks are found.
+     *
+     * @param matchingTasks the list of tasks that match the search
+     */
+    public void showMatchingTasks(TaskList matchingTasks) {
+        if (matchingTasks.isEmpty()) {
+            System.out.println("No matching tasks found.");
+        } else {
+            System.out.println("Here are the matching tasks in your list::");
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                Task taskObj = matchingTasks.get(i);
+                System.out.printf("%d. %s\n", i + 1, taskObj.toString());
+            }
+        }
+        System.out.print("\n");
+    }
 }

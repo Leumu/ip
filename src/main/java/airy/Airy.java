@@ -56,6 +56,7 @@ public class Airy {
                     break;
                 }
                 case "mark": {
+                    // Ensure args isn't empty & parses string to int
                     int taskNum = parser.parseTaskNum(command, args);
                     Task taskObj = tasks.markTask(taskNum);
                     ui.showMark(taskObj);
@@ -74,6 +75,7 @@ public class Airy {
                     break;
                 }
                 case "todo": {
+                    // Ensures arg isn't empty
                     parser.checkArg(command, args);
                     // New to do object
                     Task todoTask = new Todo(args);
@@ -122,6 +124,13 @@ public class Airy {
 
                     // Save after change
                     Storage.save(tasks.getTasks());
+                    break;
+                }
+                case "find": {
+                    parser.checkArg(command, args);
+                    // Ensures encapsulation is kept, giving all ArrayLists<Task> to TaskList
+                    TaskList matchingTasks = tasks.findTasks(args);
+                    ui.showMatchingTasks(matchingTasks);
                     break;
                 }
                 default: {
