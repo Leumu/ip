@@ -83,6 +83,7 @@ public class Storage {
                 }
                 return d;
             }
+            break;
         case "E": // Event Type
             if (parts.length == 5) {
                 String startDate = parts[3].trim();
@@ -93,6 +94,7 @@ public class Storage {
                 }
                 return e;
             }
+            break;
         default:
             return null;
         }
