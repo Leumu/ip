@@ -6,30 +6,41 @@ import java.util.ArrayList;
  * the different tasks and commands
  */
 public class Airy {
+    private final Ui ui;
+    private ArrayList<Task> tasks;
+
     /**
-     * This is my main method which handles the logic for handling
-     * the different tasks and commands
+     * This is my Airy constructor which initializes the ArrayList for Task and Ui
      */
-    public static void main(String[] args) {
-        String name = "Airy";
+    public Airy() {
+        // Initializes the Ui object
+        this.ui = new Ui();
+        // Load tasks from disk instead of starting empty
+        // If no data, create fie and return empty ArrayList
+        try {
+            this.tasks = Storage.load();
+        } catch (AiryException e) {
+            System.out.println(e.getMessage() + "\n");
+        }
+    }
+
+    /**
+     * The chatbot logic is handled here
+     */
+    public void run() {
+        ui.welcomeMessage();
         String repeat;
         String lower;
 
         // Detect input
         Scanner sc = new Scanner(System.in);
-        // Load tasks from disk instead of starting empty
-        // If no data, create fie and return empty ArrayList
-        ArrayList<Task> tasks = Storage.load();
-
-        System.out.println("Hello! I'm " + name);
-        System.out.println("What can I do for you?\n");
 
         do {
             try {
                 repeat = sc.nextLine();
                 if (repeat.isEmpty()) {
                     throw new AiryException("Please enter a keyword e.g."
-                    + " todo, deadline, event, list, mark & unmark");
+                            + " todo, deadline, event, list, mark & unmark");
                 }
                 lower = repeat.toLowerCase();
 
@@ -37,15 +48,7 @@ public class Airy {
                 if (lower.equals("bye")) {
                     break;
                 } else if (lower.equals("list")) {
-                    System.out.println("Here are the tasks in your list:");
-                    // Print out saved tasks
-                    for (int i = 0; i < tasks.size(); i++) {
-                        Task taskObj = tasks.get(i);
-                        System.out.printf("%d. %s\n",
-                                i + 1,
-                                taskObj.toString());
-                    }
-                    System.out.print("\n");
+                    ui.showTaskList(tasks);
                 } else if (lower.startsWith("mark")) {
                     if (repeat.length() <= 5) {
                         throw new AiryException("Please enter a number after mark to mark a task");
@@ -158,7 +161,16 @@ public class Airy {
             }
         } while (true);
 
-        System.out.println("Bye. Hope to see you again soon!");
         sc.close();
+    }
+
+
+
+    /**
+     * This is my main method which handles the logic for handling
+     * the different tasks and commands
+     */
+    public static void main(String[] args) {
+        new Airy().run();
     }
 }
