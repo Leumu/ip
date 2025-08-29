@@ -44,7 +44,8 @@ public class Storage {
                 }
             }
         } catch (Exception e) {
-            throw new AiryException("Something went wrong, starting with what we could read.");
+            // Log but do not throw
+            System.out.println("Warning, could not load tasks, starting with empty list instead.");
         }
         return tasks;
     }
