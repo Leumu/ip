@@ -15,7 +15,11 @@ public class Deadline extends Task {
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     /**
-     * This is my deadline constructor
+     * Constructs a new Deadline task with the specified name and due date.
+     *
+     * @param taskName the description or name of the deadline task
+     * @param dueDate the due date of the task in {yyyy-MM-dd} format
+     * @throws AiryException if the date string cannot be parsed using the expected format
      */
     public Deadline(String taskName, String dueDate) {
         super(taskName);
@@ -27,7 +31,9 @@ public class Deadline extends Task {
     }
 
     /**
-     * Provides info of the deadline task in string format
+     * Returns a string representation of the Deadline task for display to the user.
+     *
+     * @return a formatted string representation of the deadline task
      */
     @Override
     public String toString() {
@@ -37,7 +43,9 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns the dueDate in input format for Storage
+     Returns the dueDate in input format for Storage
+     *
+     * @return a string containing the due date in storage format
      */
     @Override
     public String getExtraDetailsForStorage() {

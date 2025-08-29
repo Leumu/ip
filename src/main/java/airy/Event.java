@@ -17,7 +17,12 @@ public class Event extends Task {
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     /**
-     * This is my event constructor
+     * Constructs a new Event task with the specified name, start date, and end date.
+     *
+     * @param taskName the description or name of the event task
+     * @param startDate the start date of the event in {yyyy-MM-dd} format
+     * @param endDate the end date of the event in {yyyy-MM-dd} format
+     * @throws AiryException if either date string cannot be parsed using the expected format
      */
     public Event(String taskName, String startDate, String endDate) {
         super(taskName);
@@ -30,7 +35,9 @@ public class Event extends Task {
     }
 
     /**
-     * Provides info of the event task in string format
+     * Returns a string representation of the Event task for display to the user.
+     *
+     * @return a formatted string representation of the event task
      */
     @Override
     public String toString() {
@@ -41,7 +48,10 @@ public class Event extends Task {
     }
 
     /**
-     * Returns the startDate and endDate in input format for Storage
+     * Provides the date information in a format suitable for storage.
+     * The dates are returned in the input format ({yyyy-MM-dd}).
+     *
+     * @return a string containing the start and end dates in storage format, separated by " | "
      */
     @Override
     public String getExtraDetailsForStorage() {

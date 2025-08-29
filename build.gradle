@@ -4,7 +4,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-repositories {
+repoqsitories {
     mavenCentral()
 }
 
@@ -32,7 +32,8 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveFileName = 'airy.jar'
+    archiveBaseName = "airy"
     archiveClassifier = null
 }
 

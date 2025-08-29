@@ -6,7 +6,11 @@ package airy;
 public class Parser {
 
     /**
-     * Parses the input of user
+     * Parses the raw user input into a command and its arguments.
+     *
+     * @param input The full input string from the user.
+     * @return A String array of size 2. The first element is the lowercase command,
+     *         the second element is the remaining arguments string.
      */
     public String[] parse(String input) {
         String trimInput = input.trim();
@@ -25,6 +29,10 @@ public class Parser {
 
     /**
      * Parses the args to convert String to Int
+     *
+     * @param command The command being executed (e.g., "mark", "delete").
+     * @param args The argument string provided by the user.
+     * @return The parsed task number, converted to a zero-based index.
      */
     public int parseTaskNum(String command, String args) {
         if (args.isEmpty()) {
@@ -41,6 +49,10 @@ public class Parser {
 
     /**
      * Ensures there is an argument present for Tasks such as To do, Deadline, Event
+     *
+     * @param command The command being executed (e.g., "to do", "deadline").
+     * @param args The argument string provided by the user.
+     * @throws AiryException If the argument string is empty.
      */
     public void checkArg(String command, String args) {
         if (args.isEmpty()) {
@@ -50,6 +62,11 @@ public class Parser {
 
     /**
      * Parses the Deadline and Event tasks to split them into individual args
+     *
+     * @param command The command name, must be either "deadline" or "event".
+     * @param args The full argument string for the command.
+     * @return A String array containing the parsed components.
+     * @throws AiryException If the arguments do not conform to the expected format with the required keywords.
      */
     public String[] parseDeadlineEvent(String command, String args) {
         if (command.equals("deadline")) {

@@ -8,7 +8,9 @@ public abstract class Task {
     private Boolean isCompleted;
 
     /**
-     * This is my task constructor
+     * Constructs a new Task with the specified name.
+     *
+     * @param taskName the name of the task
      */
     public Task(String taskName) {
         this.taskName = taskName;
@@ -16,7 +18,9 @@ public abstract class Task {
     }
 
     /**
-     * Fetches the status of the task and returns a String
+     * Returns the completion status of the task
+     *
+     * @return "X" if the task is completed, a single space " " if not completed
      */
     public String getStatus() {
         return (isCompleted ? "X" : " ");
@@ -37,22 +41,29 @@ public abstract class Task {
     }
 
     /**
-     * Fetches the name of the task
+     * Fetches the name of the task.
+     *
+     * @return the task description string
      */
     public String getTaskName() {
         return taskName;
     }
 
     /**
-     * Provides general info of the task in string format
+     * Returns a String format that has the completion status indicator and task name.
+     *
+     * @return a formatted string showing the task's status and name
      */
     @Override
     public String toString() {
         return String.format("[%s] %s", getStatus(), getTaskName());
     }
 
+
     /**
      * Gets extra details, esp for Tasks like Deadline and Event for Storage class
+     *
+     * @return a string containing task-specific details in storage format
      */
     public abstract String getExtraDetailsForStorage();
 }

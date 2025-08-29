@@ -24,7 +24,9 @@ public class Ui {
     }
 
     /**
-     * Shows list of tasks
+     * Displays the complete list of tasks to the user.
+     *
+     * @param tasks the ArrayList of tasks to display
      */
     public void showTaskList(ArrayList<Task> tasks) {
         System.out.println("Here are the tasks in your list:");
@@ -39,7 +41,11 @@ public class Ui {
     }
 
     /**
-     * Shows task created confirmation
+     * Confirms that a task has been successfully added to the list.
+     * Shows the added task and updates the user on the total task count.
+     *
+     * @param task the task that was added
+     * @param total the new total number of tasks in the list
      */
     public void showTaskAdded(Task task, int total) {
         System.out.println("Got it. I've added this task:");
@@ -48,7 +54,11 @@ public class Ui {
     }
 
     /**
-     * Shows task removed confirmation
+     * Confirms that a task has been successfully removed from the list.
+     * Shows the removed task and updates the user on the total task count.
+     *
+     * @param task the task that was removed
+     * @param total the new total number of tasks in the list
      */
     public void showTaskRemoved(Task task, int total) {
         System.out.println("Noted. I've removed this task:");
@@ -57,7 +67,9 @@ public class Ui {
     }
 
     /**
-     * Shows task as marked confirmation
+     * Confirms that a task has been marked as completed.
+     *
+     * @param task the task that is to be marked as done
      */
     public void showMark(Task task) {
         System.out.println("Nice! I've marked this task as done:");
@@ -65,7 +77,9 @@ public class Ui {
     }
 
     /**
-     * Shows task as unmarked confirmation
+     * Confirms that a task has been marked as not completed.
+     *
+     * @param task the task that is to be marked as not done
      */
     public void showUnmark(Task task) {
         System.out.println("OK, I've marked this task as not done yet:");

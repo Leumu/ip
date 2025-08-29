@@ -14,6 +14,8 @@ public class Storage {
 
     /**
      * Creates the file if it does not exist
+     *
+     * @throws AiryException if the directory or file cannot be created
      */
     private static void fileExists() {
         try {
@@ -31,6 +33,8 @@ public class Storage {
     /**
      * Loads tasks from ./data/Airy.txt.
      * Create file if it doesn't exist it and returns empty list.
+     *
+     * @return an ArrayList containing all loaded tasks, or an empty list if no tasks exist or errors occur
      */
     public static ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -54,6 +58,9 @@ public class Storage {
 
     /**
      * Creates task from the raw data fetched from the file
+     *
+     * @param line a single line from the storage file
+     * @return the created Task object, or null if the line format is invalid
      */
     private static Task createTask(String line) {
         // Split into at most 4 pieces
@@ -101,11 +108,13 @@ public class Storage {
     /**
      * Saves the current tasks list to ./data/Airy.txt
      * Note it overwrites the file
+     *
+     * @param tasks the list of tasks to be saved to storage
      */
     public static void save(ArrayList<Task> tasks) {
         List<String> data = new ArrayList<>();
         for (Task task : tasks) {
-            data.add(serialize(task)); // Change formatting for every Task inside ArrayList tasks to a String
+            data.add(taskFormat(task)); // Change formatting for every Task inside ArrayList tasks to a String
         }
         try {
             fileExists();
@@ -118,13 +127,12 @@ public class Storage {
     }
 
     /**
-     * Saves the existing tasks into my file data/Airy.txt
-     * File format:
-     * T | 1 | read book
-     * D | 0 | return book | Sunday
-     * E | 0 | project meeting | Mon 2pm | 4pm
+     * Converts a Task object into a string with formatting for storage.
+     *
+     * @param t the Task object to be serialized
+     * @return a string representation of the task in storage format
      */
-    private static String serialize(Task t) {
+    private static String taskFormat(Task t) {
         String isCompleted = t.getStatus().equals("X") ? "1" : "0";
 
         if (t instanceof Todo) {
