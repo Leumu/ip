@@ -83,8 +83,8 @@ public class Parser {
             String[] parts = args.split("/from|/to");
             if (parts.length != 3) {
                 throw new AiryException(
-                        "Please do /from before entering the start date and /to before entering the end date" +
-                                " E.g. event project meeting /from Mon 2pm /to 4pm");
+                        "Please do /from before entering the start date and /to before entering the end date"
+                                + " E.g. event project meeting /from Mon 2pm /to 4pm");
             }
             parts[0] = parts[0].trim();
             parts[1] = parts[1].trim();

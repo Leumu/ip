@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * This class handles all UI methods the bot has
  */
 public class Ui {
-    String name = "Airy";
+    private String name = "Airy";
 
     /**
      * Sends welcome message

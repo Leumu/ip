@@ -1,16 +1,17 @@
 package app;
 
 import airy.Airy;
-import javafx.fxml.FXML;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.util.Duration;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+
 /**
  * Controller for the main GUI.
  */
@@ -62,6 +63,11 @@ public class MainWindow extends AnchorPane {
         }
     }
 
+    /**
+     * Displays a welcome message in the dialog container.
+     *
+     * @param text the message to be displayed
+     */
     public void displayWelcome(String text) {
         dialogContainer.getChildren().add(
                 DialogBox.getAiryDialog(text, airyImage)

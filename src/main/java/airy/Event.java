@@ -10,11 +10,10 @@ import java.time.format.DateTimeParseException;
  * A task with a starting date and an end date
  */
 public class Event extends Task {
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
     /**
      * Constructs a new Event task with the specified name, start date, and end date.
