@@ -25,132 +25,124 @@ public class Airy {
     }
 
     /**
-     * The chatbot logic is handled here
+     * Getter method to print Welcome message
      */
-    public void run() {
-        String repeat;
-        ui.welcomeMessage();
-        // Detect input
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            try {
-                repeat = sc.nextLine();
-                if (repeat.isEmpty()) {
-                    throw new AiryException("Please enter a keyword e.g."
-                            + " todo, deadline, event, list, mark & unmark");
-                }
-
-                String[] parsed = parser.parse(repeat);
-                String command = parsed[0];
-                String args = parsed[1];
-
-                // Only repeat if it's not bye
-                if (command.equals("bye")) {
-                    break;
-                }
-
-                switch (command) {
-                case "list": {
-                    ui.showTaskList(tasks.getTasks());
-                    break;
-                }
-                case "mark": {
-                    // Ensure args isn't empty & parses string to int
-                    int taskNum = parser.parseTaskNum(command, args);
-                    Task taskObj = tasks.markTask(taskNum);
-                    ui.showMark(taskObj);
-
-                    // Save after change
-                    Storage.save(tasks.getTasks());
-                    break;
-                }
-                case "unmark": {
-                    int taskNum = parser.parseTaskNum(command, args);
-                    Task taskObj = tasks.unmarkTask(taskNum);
-                    ui.showUnmark(taskObj);
-
-                    // Save after change
-                    Storage.save(tasks.getTasks());
-                    break;
-                }
-                case "todo": {
-                    // Ensures arg isn't empty
-                    parser.checkArg(command, args);
-                    // New to do object
-                    Task todoTask = new Todo(args);
-                    // Save to do object into array
-                    tasks.addTask(todoTask);
-                    // Show user task has been added
-                    ui.showTaskAdded(todoTask, tasks.getSize());
-
-                    // Save after change
-                    Storage.save(tasks.getTasks());
-                    break;
-                }
-                case "deadline": {
-                    parser.checkArg(command, args);
-                    String[] parts = parser.parseDeadlineEvent(command, args);
-                    // New deadline object, parts[0] = taskName, parts[1] = dueDate
-                    Deadline deadlineTask = new Deadline(parts[0], parts[1]);
-                    // Save to do object into array
-                    tasks.addTask(deadlineTask);
-                    // Show user task has been added
-                    ui.showTaskAdded(deadlineTask, tasks.getSize());
-
-                    // Save after change
-                    Storage.save(tasks.getTasks());
-                    break;
-                }
-                case "event": {
-                    parser.checkArg(command, args);
-                    String[] parts = parser.parseDeadlineEvent(command, args);
-                    // New event object, parts[0] = taskName, parts[1] = startDate, parts[2] = endDate
-                    Event eventTask = new Event(parts[0], parts[1], parts[2]);
-                    // Save to do object into array
-                    tasks.addTask(eventTask);
-                    // Show user task has been added
-                    ui.showTaskAdded(eventTask, tasks.getSize());
-
-                    // Save after change
-                    Storage.save(tasks.getTasks());
-                    break;
-                }
-                case "delete": {
-                    int taskNum = parser.parseTaskNum(command, args);
-                    // ArrayList auto reduces the index of elements after deleted element by 1
-                    Task removedTask = tasks.deleteTask(taskNum);
-                    ui.showTaskRemoved(removedTask, tasks.getSize());
-
-                    // Save after change
-                    Storage.save(tasks.getTasks());
-                    break;
-                }
-                case "find": {
-                    parser.checkArg(command, args);
-                    // Ensures encapsulation is kept, giving all ArrayLists<Task> to TaskList
-                    TaskList matchingTasks = tasks.findTasks(args);
-                    ui.showMatchingTasks(matchingTasks);
-                    break;
-                }
-                default: {
-                    // Unrecognized command
-                    throw new AiryException("Unrecognized command");
-                }
-                }
-            } catch (AiryException e) { // Catch exceptions
-                System.out.println(e.getMessage() + "\n");
-            }
-        }
-
-        ui.byeMessage();
-        sc.close();
+    public String getWelcomeUi() {
+        return ui.getWelcomeMessage();
     }
 
     /**
-     * Main method used to call run()
+     * Generates a response for the user's chat message.
      */
-    public static void main(String[] args) {
-        new Airy().run();
+    public String getResponse(String input) {
+        String result = "";
+
+        try {
+            if (input.isEmpty()) {
+                throw new AiryException("Please enter a keyword e.g."
+                        + " todo, deadline, event, list, mark & unmark");
+            }
+
+            String[] parsed = parser.parse(input);
+            String command = parsed[0];
+            String args = parsed[1];
+
+            // break immediately if bye
+            if (command.equals("bye")) {
+                return ui.byeMessage();
+            }
+
+            switch (command) {
+            case "list": {
+                result = ui.showTaskList(tasks.getTasks());
+                break;
+            }
+            case "mark": {
+                // Ensure args isn't empty & parses string to int
+                int taskNum = parser.parseTaskNum(command, args);
+                Task taskObj = tasks.markTask(taskNum);
+                result = ui.showMark(taskObj);
+
+                // Save after change
+                Storage.save(tasks.getTasks());
+                break;
+            }
+            case "unmark": {
+                int taskNum = parser.parseTaskNum(command, args);
+                Task taskObj = tasks.unmarkTask(taskNum);
+                result = ui.showUnmark(taskObj);
+
+                // Save after change
+                Storage.save(tasks.getTasks());
+                break;
+            }
+            case "todo": {
+                // Ensures arg isn't empty
+                parser.checkArg(command, args);
+                // New to do object
+                Task todoTask = new Todo(args);
+                // Save to do object into array
+                tasks.addTask(todoTask);
+                // Show user task has been added
+                result = ui.showTaskAdded(todoTask, tasks.getSize());
+
+                // Save after change
+                Storage.save(tasks.getTasks());
+                break;
+            }
+            case "deadline": {
+                parser.checkArg(command, args);
+                String[] parts = parser.parseDeadlineEvent(command, args);
+                // New deadline object, parts[0] = taskName, parts[1] = dueDate
+                Deadline deadlineTask = new Deadline(parts[0], parts[1]);
+                // Save to do object into array
+                tasks.addTask(deadlineTask);
+                // Show user task has been added
+                result = ui.showTaskAdded(deadlineTask, tasks.getSize());
+
+                // Save after change
+                Storage.save(tasks.getTasks());
+                break;
+            }
+            case "event": {
+                parser.checkArg(command, args);
+                String[] parts = parser.parseDeadlineEvent(command, args);
+                // New event object, parts[0] = taskName, parts[1] = startDate, parts[2] = endDate
+                Event eventTask = new Event(parts[0], parts[1], parts[2]);
+                // Save to do object into array
+                tasks.addTask(eventTask);
+                // Show user task has been added
+                result = ui.showTaskAdded(eventTask, tasks.getSize());
+
+                // Save after change
+                Storage.save(tasks.getTasks());
+                break;
+            }
+            case "delete": {
+                int taskNum = parser.parseTaskNum(command, args);
+                // ArrayList auto reduces the index of elements after deleted element by 1
+                Task removedTask = tasks.deleteTask(taskNum);
+                result = ui.showTaskRemoved(removedTask, tasks.getSize());
+
+                // Save after change
+                Storage.save(tasks.getTasks());
+                break;
+            }
+            case "find": {
+                parser.checkArg(command, args);
+                // Ensures encapsulation is kept, giving all ArrayLists<Task> to TaskList
+                TaskList matchingTasks = tasks.findTasks(args);
+                result = ui.showMatchingTasks(matchingTasks);
+                break;
+            }
+            default: {
+                // Unrecognized command
+                throw new AiryException("Unrecognized command");
+            }
+            }
+        } catch (AiryException e) { // Catch exceptions
+            return e.getMessage();
+        }
+        return result;
     }
 }
