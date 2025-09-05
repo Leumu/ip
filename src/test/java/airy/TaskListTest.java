@@ -3,8 +3,16 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * JUnit test for the TaskList class.
+ * Verifies that outputs match expected results.
+ */
 public class TaskListTest {
 
+    /**
+     * Tests that adding a Task to TaskList
+     * increases the list size and stores the task correctly.
+     */
     @Test
     public void addTask_validTask_success() {
         // Empty ArrayList
@@ -17,6 +25,9 @@ public class TaskListTest {
         assertEquals(todo, tasks.getTasks().get(0));
     }
 
+    /**
+     * Tests that marking a task at a valid index in TaskList updates its status.
+     */
     @Test
     public void markTask_validIndex_taskMarked() {
         TaskList tasks = new TaskList(new ArrayList<>());
