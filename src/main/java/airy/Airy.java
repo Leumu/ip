@@ -1,7 +1,5 @@
 package airy;
 
-import java.util.Scanner;
-
 /**
  * This is my main class which implements the logic for handling
  * the different tasks and commands
