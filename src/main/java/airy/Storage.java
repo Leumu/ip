@@ -73,38 +73,34 @@ public class Storage {
         boolean isCompleted = parts[1].trim().equals("1");
         String name = parts[2].trim();
 
+        Task task = null;
         // Switch statement to create respective tasks based on their data
         switch (type) {
         case "T": // To do Type
-            Todo t = new Todo(name);
-            if (isCompleted) {
-                t.markCompleted();
-            }
-            return t;
+            task = new Todo(name);
+            break;
         case "D": // Deadline Type
             if (parts.length == 4) {
                 String dueDate = parts[3].trim();
-                Deadline d = new Deadline(name, dueDate);
-                if (isCompleted) {
-                    d.markCompleted();
-                }
-                return d;
+                task = new Deadline(name, dueDate);
             }
             break;
         case "E": // Event Type
             if (parts.length == 5) {
                 String startDate = parts[3].trim();
                 String endDate = parts[4].trim();
-                Event e = new Event(name, startDate, endDate);
-                if (isCompleted) {
-                    e.markCompleted();
-                }
-                return e;
+                task = new Event(name, startDate, endDate);
             }
             break;
         default:
             return null;
         }
+
+        if (task != null && isCompleted) {
+            task.markCompleted();
+        }
+
+        return task;
     }
 
     /**
