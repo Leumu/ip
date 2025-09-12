@@ -25,6 +25,7 @@ public class Event extends Task {
      */
     public Event(String taskName, String startDate, String endDate) {
         super(taskName);
+        assert taskName != null && !taskName.isBlank() : "Task name must not be empty";
         try {
             this.startDate = LocalDate.parse(startDate, INPUT_FORMAT);
             this.endDate = LocalDate.parse(endDate, INPUT_FORMAT);
