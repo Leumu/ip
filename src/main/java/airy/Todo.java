@@ -13,6 +13,7 @@ public class Todo extends Task {
      */
     public Todo(String taskName) {
         super(taskName);
+        assert taskName != null && !taskName.isBlank() : "Task name must not be empty";
     }
 
     /**
