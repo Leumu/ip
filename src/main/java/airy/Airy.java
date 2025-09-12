@@ -40,7 +40,7 @@ public class Airy {
         Task taskObj = mark ? tasks.markTask(taskIndex) : tasks.unmarkTask(taskIndex);
         // Save after change
         Storage.save(tasks.getTasks());
-        return ui.showMark(taskObj);
+        return mark ? ui.showMark(taskObj) : ui.showUnmark(taskObj);
     }
 
     /**
@@ -64,6 +64,7 @@ public class Airy {
      */
     public String getResponse(String input) {
         String result = "";
+        int tasksSize = tasks.getSize();
 
         try {
             if (input.isEmpty()) {
@@ -87,12 +88,12 @@ public class Airy {
             }
             case "mark": {
                 // Ensure args isn't empty & parses string to int
-                int taskNum = parser.parseTaskNum(command, args);
+                int taskNum = parser.parseTaskNum(command, args, tasksSize);
                 result = markAndSaveTask(taskNum, true);
                 break;
             }
             case "unmark": {
-                int taskNum = parser.parseTaskNum(command, args);
+                int taskNum = parser.parseTaskNum(command, args, tasksSize);
                 result = markAndSaveTask(taskNum, false);
                 break;
             }
@@ -106,7 +107,7 @@ public class Airy {
             }
             case "deadline": {
                 parser.checkArg(command, args);
-                String[] parts = parser.parseDeadlineEvent(command, args);
+                String[] parts = parser.parseDeadline(args);
                 // New deadline object, parts[0] = taskName, parts[1] = dueDate
                 Deadline deadlineTask = new Deadline(parts[0], parts[1]);
                 result = addAndSaveTask(deadlineTask);
@@ -114,17 +115,26 @@ public class Airy {
             }
             case "event": {
                 parser.checkArg(command, args);
-                String[] parts = parser.parseDeadlineEvent(command, args);
+                String[] parts = parser.parseEvent(args);
                 // New event object, parts[0] = taskName, parts[1] = startDate, parts[2] = endDate
                 Event eventTask = new Event(parts[0], parts[1], parts[2]);
                 result = addAndSaveTask(eventTask);
                 break;
             }
             case "delete": {
-                int taskNum = parser.parseTaskNum(command, args);
-                // ArrayList auto reduces the index of elements after deleted element by 1
-                Task removedTask = tasks.deleteTask(taskNum);
-                result = ui.showTaskRemoved(removedTask, tasks.getSize());
+                // Gets unsorted parsed int array to show that we deleted the tasks in the order he specified
+                int[] parsedDeleteIndexes = parser.parseDelete(args, tasksSize);
+                // Gets sorted array in descending order to ensure indices when deleting is correct
+                int[] descDeleteIndexes = parser.descDeleteArray(parsedDeleteIndexes);
+                // Saves the UI result before deletion as deletion messes up the indices
+                for (int i = 0; i < parsedDeleteIndexes.length; i++) {
+                    result += ui.showTaskRemoved(
+                            tasks.get(parsedDeleteIndexes[i]),
+                            tasks.getSize());
+                }
+                for (int i = 0; i < descDeleteIndexes.length; i++) {
+                    tasks.deleteTask(descDeleteIndexes[i]);
+                }
 
                 // Save after change
                 Storage.save(tasks.getTasks());
