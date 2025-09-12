@@ -22,6 +22,7 @@ public class Deadline extends Task {
      */
     public Deadline(String taskName, String dueDate) {
         super(taskName);
+        assert taskName != null && !taskName.isBlank() : "Task name must not be empty";
         try {
             this.dueDate = LocalDate.parse(dueDate, INPUT_FORMAT);
         } catch (DateTimeParseException e) {
