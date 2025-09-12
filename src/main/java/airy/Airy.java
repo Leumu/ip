@@ -30,6 +30,36 @@ public class Airy {
     }
 
     /**
+     * Marks Task and saves it to Storage.
+     * Show confirmation UI when completed.
+     *
+     * @param taskIndex the task index to be marked and saved.
+     * @return the confirmation message that the task has been marked.
+     */
+    public String markAndSaveTask(int taskIndex, Boolean mark) {
+        Task taskObj = mark ? tasks.markTask(taskIndex) : tasks.unmarkTask(taskIndex);
+        // Save after change
+        Storage.save(tasks.getTasks());
+        return ui.showMark(taskObj);
+    }
+
+    /**
+     * Adds Task to tasks array and saves it to Storage.
+     * Show confirmation UI when completed.
+     *
+     * @param task the task object to be added and saved.
+     * @return the confirmation message that the task has been added.
+     */
+    public String addAndSaveTask(Task task) {
+        // Save to do object into array
+        tasks.addTask(task);
+        // Save after change
+        Storage.save(tasks.getTasks());
+        // Show user task has been added
+        return ui.showTaskAdded(task, tasks.getSize());
+    }
+
+    /**
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) {
@@ -58,20 +88,12 @@ public class Airy {
             case "mark": {
                 // Ensure args isn't empty & parses string to int
                 int taskNum = parser.parseTaskNum(command, args);
-                Task taskObj = tasks.markTask(taskNum);
-                result = ui.showMark(taskObj);
-
-                // Save after change
-                Storage.save(tasks.getTasks());
+                result = markAndSaveTask(taskNum, true);
                 break;
             }
             case "unmark": {
                 int taskNum = parser.parseTaskNum(command, args);
-                Task taskObj = tasks.unmarkTask(taskNum);
-                result = ui.showUnmark(taskObj);
-
-                // Save after change
-                Storage.save(tasks.getTasks());
+                result = markAndSaveTask(taskNum, false);
                 break;
             }
             case "todo": {
@@ -79,13 +101,7 @@ public class Airy {
                 parser.checkArg(command, args);
                 // New to do object
                 Task todoTask = new Todo(args);
-                // Save to do object into array
-                tasks.addTask(todoTask);
-                // Show user task has been added
-                result = ui.showTaskAdded(todoTask, tasks.getSize());
-
-                // Save after change
-                Storage.save(tasks.getTasks());
+                result = addAndSaveTask(todoTask);
                 break;
             }
             case "deadline": {
@@ -93,13 +109,7 @@ public class Airy {
                 String[] parts = parser.parseDeadlineEvent(command, args);
                 // New deadline object, parts[0] = taskName, parts[1] = dueDate
                 Deadline deadlineTask = new Deadline(parts[0], parts[1]);
-                // Save to do object into array
-                tasks.addTask(deadlineTask);
-                // Show user task has been added
-                result = ui.showTaskAdded(deadlineTask, tasks.getSize());
-
-                // Save after change
-                Storage.save(tasks.getTasks());
+                result = addAndSaveTask(deadlineTask);
                 break;
             }
             case "event": {
@@ -107,13 +117,7 @@ public class Airy {
                 String[] parts = parser.parseDeadlineEvent(command, args);
                 // New event object, parts[0] = taskName, parts[1] = startDate, parts[2] = endDate
                 Event eventTask = new Event(parts[0], parts[1], parts[2]);
-                // Save to do object into array
-                tasks.addTask(eventTask);
-                // Show user task has been added
-                result = ui.showTaskAdded(eventTask, tasks.getSize());
-
-                // Save after change
-                Storage.save(tasks.getTasks());
+                result = addAndSaveTask(eventTask);
                 break;
             }
             case "delete": {

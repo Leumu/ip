@@ -83,15 +83,6 @@ public class TaskList {
     }
 
     /**
-     * Returns the number of tasks in the ArrayList.
-     *
-     * @return the number of tasks
-     */
-    public int size() {
-        return tasks.size();
-    }
-
-    /**
      * Returns the task at the specified index in the ArrayList.
      *
      * @param index the index of the task to return

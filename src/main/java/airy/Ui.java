@@ -107,7 +107,7 @@ public class Ui {
             sb.append("No matching tasks found.\n\n");
         } else {
             sb.append("Here are the matching tasks in your list:\n");
-            for (int i = 0; i < matchingTasks.size(); i++) {
+            for (int i = 0; i < matchingTasks.getSize(); i++) {
                 Task taskObj = matchingTasks.get(i);
                 sb.append(String.format("%d. %s\n", i + 1, taskObj));
             }
