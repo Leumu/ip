@@ -43,13 +43,16 @@ public class Storage {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
             fileExists();
-            if (Files.size(DATA_FILE) > 0) { // So no error is throw if file is empty
-                List<String> lines = Files.readAllLines(DATA_FILE); // If file is empty, it throws an error
-                for (String line : lines) {
-                    Task t = createTask(line); // Creates the task
-                    if (t != null) {
-                        tasks.add(t); // Stores the task in the ArrayList
-                    }
+            // Guard clause to exit early if file is empty
+            if (Files.size(DATA_FILE) == 0) {
+                return tasks;
+            }
+
+            List<String> lines = Files.readAllLines(DATA_FILE); // If file is empty, it throws an error
+            for (String line : lines) {
+                Task t = createTask(line); // Creates the task
+                if (t != null) {
+                    tasks.add(t); // Stores the task in the ArrayList
                 }
             }
         } catch (Exception e) {

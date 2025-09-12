@@ -70,26 +70,54 @@ public class Parser {
      */
     public String[] parseDeadlineEvent(String command, String args) {
         if (command.equals("deadline")) {
-            String[] parts = args.split("/by");
-            if (parts.length != 2) {
-                throw new AiryException(
-                        "Please do /by before entering the due date. E.g. deadline return book /by Sunday");
-            }
-            parts[0] = parts[0].trim();
-            parts[1] = parts[1].trim();
-            return parts;
+            return parseDeadline(args);
         } else { // (command.equals("event"))
-            // Split string whenever u see /from or /to
-            String[] parts = args.split("/from|/to");
-            if (parts.length != 3) {
-                throw new AiryException(
-                        "Please do /from before entering the start date and /to before entering the end date"
-                                + " E.g. event project meeting /from Mon 2pm /to 4pm");
-            }
-            parts[0] = parts[0].trim();
-            parts[1] = parts[1].trim();
-            parts[2] = parts[2].trim();
-            return parts;
+            return parseEvent(args);
         }
+    }
+
+    /**
+     * Parse Deadline tasks to split them into individual args.
+     *
+     * @param args The full argument string for the command.
+     * @return A String array containing the parsed components.
+     */
+    public String[] parseDeadline(String args) {
+        String[] parts = args.split("/by");
+        if (parts.length != 2) {
+            throw new AiryException(
+                    "Please do /by before entering the due date. E.g. deadline return book /by Sunday");
+        }
+        return trimParts(parts);
+    }
+
+    /**
+     * Parse Event tasks to split them into individual args.
+     *
+     * @param args The full argument string for the command.
+     * @return A String array containing the parsed components.
+     */
+    public String[] parseEvent(String args) {
+        // Split string whenever u see /from or /to
+        String[] parts = args.split("/from|/to");
+        if (parts.length != 3) {
+            throw new AiryException(
+                    "Please do /from before entering the start date and /to before entering the end date"
+                            + " E.g. event project meeting /from Mon 2pm /to 4pm");
+        }
+        return trimParts(parts);
+    }
+
+    /**
+     * Trims the parts to remove whitespace.
+     *
+     * @param parts A String array containing the untrimmed components.
+     * @return A String array containing the trimmed components.
+     */
+    public String[] trimParts(String[] parts) {
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        return parts;
     }
 }
