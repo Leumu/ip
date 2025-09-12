@@ -34,6 +34,7 @@ public class TaskList {
      * @return the task that was removed from the ArrayList
      */
     public Task deleteTask(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for deleteTask";
         return tasks.remove(index);
     }
 
@@ -44,6 +45,7 @@ public class TaskList {
      * @return the task that was marked as completed
      */
     public Task markTask(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for markTask";
         Task t = tasks.get(index);
         t.markCompleted();
         return t;
@@ -56,6 +58,7 @@ public class TaskList {
      * @return the task that was marked as not completed
      */
     public Task unmarkTask(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for unmarkTask";
         Task t = tasks.get(index);
         t.markUncompleted();
         return t;
@@ -95,6 +98,7 @@ public class TaskList {
      * @return the task at the specified index
      */
     public Task get(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for get";
         return tasks.get(index);
     }
 
@@ -115,6 +119,7 @@ public class TaskList {
      */
     public TaskList findTasks(String searchInput) {
         ArrayList<Task> foundTasks = new ArrayList<>();
+        assert searchInput != null : "SearchInput should not be null";
         String lowerSearchInput = searchInput.toLowerCase();
 
         // Iterate over whole tasks ArrayList to see if any match the search input

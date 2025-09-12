@@ -83,12 +83,14 @@ public class Storage {
             task = new Todo(name);
             break;
         case "D": // Deadline Type
+            assert parts.length == 4 : "Deadline type must have 5 parts";
             if (parts.length == 4) {
                 String dueDate = parts[3].trim();
                 task = new Deadline(name, dueDate);
             }
             break;
         case "E": // Event Type
+            assert parts.length == 5 : "Event type must have 5 parts";
             if (parts.length == 5) {
                 String startDate = parts[3].trim();
                 String endDate = parts[4].trim();
@@ -141,6 +143,7 @@ public class Storage {
         } else if (t instanceof Deadline) {
             return String.format("D | %s | %s | %s", isCompleted, t.getTaskName(), t.getExtraDetailsForStorage());
         } else {
+            assert t instanceof Event : "Unknown task type encountered";
             return String.format("E | %s | %s | %s", isCompleted, t.getTaskName(), t.getExtraDetailsForStorage());
         }
     }
