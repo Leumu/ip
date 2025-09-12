@@ -44,7 +44,7 @@ test {
 }
 
 application {
-    mainClass.set("airy.Airy")
+    mainClass.set("app.Main")
 }
 
 shadowJar {
