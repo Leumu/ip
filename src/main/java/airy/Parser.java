@@ -64,7 +64,7 @@ public class Parser {
     }
 
     /**
-     * Parse Deadline tasks to split them into individual args.
+     * Parses a Deadline task command into its individual args.
      *
      * @param args The full argument string for the command.
      * @return A String array containing the parsed components.
@@ -79,7 +79,7 @@ public class Parser {
     }
 
     /**
-     * Parse Event tasks to split them into individual args.
+     * Parses an Event task command into its individual args.
      *
      * @param args The full argument string for the command.
      * @return A String array containing the parsed components.
@@ -96,7 +96,7 @@ public class Parser {
     }
 
     /**
-     * Parse Delete args to split them into individual args.
+     * Parses Delete args to split them into individual args.
      * Allows user to mass delete.
      * E.g. Delete 2 3, extract 2 and 3 from there.
      *

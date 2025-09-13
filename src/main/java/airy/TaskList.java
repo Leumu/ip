@@ -65,7 +65,7 @@ public class TaskList {
     }
 
     /**
-     * Get size of this ArrayList
+     * Returns the size of this ArrayList
      *
      * @return the number of tasks in the collection
      */
