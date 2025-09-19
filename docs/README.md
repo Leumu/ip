@@ -4,7 +4,7 @@
 Welcome to your very own personal Task Manager chat bot, Airy!
 Airy is here to ensure you never miss any tasks, deadlines or events!
 
-![Airy GUI](docs/Ui.png)
+![Airy GUI](Ui.png)
 
 ## Getting Started
 
